@@ -115,6 +115,11 @@ const erase = (ctx, handLandmarks) => {
         // 검지를 폈을 경우만 그리기
         if (handLandmarks[0][6].y > handLandmarks[0][8].y && y1 > 110) {
             ctx.clearRect(x1 - 5, y1 - 5, 50, 50);
+            // ctx.globalCompositeOperation = 'destination-out';
+            // ctx.beginPath();
+            // ctx.arc(x1, y1, 25, 0, 2 * Math.PI);
+            // ctx.fill();
+            // ctx.globalCompositeOperation = 'source-over';
         }
     }
 }

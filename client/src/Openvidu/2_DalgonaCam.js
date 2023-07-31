@@ -35,6 +35,18 @@ const DalgonaCam = (props) => {
     const drawCanvasRef = useRef(null)
     // const resultsRef = useRef(null)
 
+    useEffect(() => {
+        if (publisher && !!webcamRef.current) {
+            publisher.addVideoElement(webcamRef.current);
+        }
+
+        return () => {
+            if (publisher && !!webcamRef.current) {
+                publisher.removeVideoElement(webcamRef.current);
+            }
+        };
+    }, [publisher]);
+
 
     useEffect(
         () => {
@@ -77,7 +89,7 @@ const DalgonaCam = (props) => {
             }
         };
         const img2 = new Image();
-        img2.src = '/hibiscus2_bg_black.png';
+        img2.src = '/d_circle-removebg-preview.png';
         img2.onload = () => {
             if (ctx) {
             ctx.drawImage(img2, 450, 200, 400,400);
@@ -85,6 +97,8 @@ const DalgonaCam = (props) => {
         };
     }, [publisher]
     )
+    
+
 
 
     return (
@@ -113,7 +127,7 @@ const DalgonaCam = (props) => {
 
             {publisher !== undefined ? (
                 <div className={styles.container} >
-                    <OpenViduVideoComponent2 streamManager={publisher} webcamRef={webcamRef}/>
+                    <video autoPlay={true} ref={webcamRef} style={{visibility: 'hidden', width: '1280px', height: '720px'} }/>
                      <canvas ref={canvasRef}
                         className={styles.canvas}
                         width={1280}
