@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from 'react';
 import { OpenVidu } from 'openvidu-browser';
 import axios from 'axios';
 import DalgonaCam from './2_DalgonaCam';
+// JANG: subscribers 시도
+import UserVideoComponent from './UserVideoComponent';
 
 
 const APPLICATION_SERVER_URL = process.env.NODE_ENV === 'production' ? '' : 'https://demos.openvidu.io/';
@@ -163,7 +165,7 @@ const JoinSession = () => {
                 </div>
             ) : null}
 
-            {session !== undefined && myUserName !== undefined ? (
+            {/* {session !== undefined && myUserName !== undefined ? (
                 <DalgonaCam
                     state={{
                         mySessionId,
@@ -175,6 +177,28 @@ const JoinSession = () => {
                         currentVideoDevice,
                     }}
                 />
+            ) : null} */}
+            {/* JANG: subscribers 시도 */}
+            {session !== undefined && myUserName !== undefined ? (
+                <>
+                <DalgonaCam
+                    state={{
+                        mySessionId,
+                        myUserName,
+                        session,
+                        mainStreamManager,
+                        publisher,
+                        subscribers,
+                        currentVideoDevice,
+                    }}
+                />
+                {subscribers.map((sub, i) => (
+                    <div key={sub.id} className="stream-container col-md-6 col-xs-6">
+                        <span>{sub.id}</span>
+                        <UserVideoComponent streamManager={sub} />
+                    </div>
+                ))}
+                </>
             ) : null}
         </div>
     );
